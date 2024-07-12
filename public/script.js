@@ -1,36 +1,56 @@
-function sendMessage() {
-    const userInput = document.getElementById('user-input');
-    const chatBox = document.getElementById('chat-box');
-    
-    if (userInput.value.trim() === '') return;
-    
-    // Add user message to chat
-    const userMessage = document.createElement('div');
-    userMessage.classList.add('message', 'user-message');
-    userMessage.innerText = userInput.value;
-    chatBox.appendChild(userMessage);
-    
-    // Scroll to the bottom of the chat box
+document.getElementById('chat-bubble').addEventListener('click', () => {
+    const chatContainer = document.getElementById('chat-container');
+    if (chatContainer.style.display === 'none' || chatContainer.style.display === '') {
+        chatContainer.style.display = 'block';
+    } else {
+        chatContainer.style.display = 'none';
+    }
+});
+
+const sendMessage = async () => {
+    const message = document.getElementById('message-input').value;
+    const chatBox = document.querySelector('.direct-chat-messages');
+
+    if (!message.trim()) return;
+
+    // Añadir mensaje del usuario al chat
+    const userMessageDiv = document.createElement('div');
+    userMessageDiv.classList.add('direct-chat-msg', 'right');
+    userMessageDiv.innerHTML =
+        `<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right">Usuario</span></div><img class="direct-chat-img" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="message user image"><div class="direct-chat-text">${message}</div>`;
+    chatBox.appendChild(userMessageDiv);
+
+    // Enviar mensaje al servidor
+    const response = await fetch('/api/chatbot', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            message
+        })
+    });
+
+    const data = await response.text(); // changed from response.json() to response.text()
+
+    // Añadir mensaje del bot al chat
+    const botMessageDiv = document.createElement('div');
+    botMessageDiv.classList.add('direct-chat-msg');
+    botMessageDiv.innerHTML =
+        `<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">Lerdo Contemporaneo</span></div><img class="direct-chat-img" src=Logo Florista Circular Blanco Negro.PNG" alt="message user image"><div class="direct-chat-text">${data}</div>`;
+    chatBox.appendChild(botMessageDiv);
+
+    // Desplazar hacia abajo
     chatBox.scrollTop = chatBox.scrollHeight;
-    
-    // Simulate bot response
-    setTimeout(() => {
-        const botMessage = document.createElement('div');
-        botMessage.classList.add('message', 'bot-message');
-        
-        if (userInput.value.includes('1') || userInput.value.toLowerCase().includes('información')) {
-            botMessage.innerHTML = '¡Claro! Para obtener información sobre cómo inscribirte en una carrera universitaria, generalmente necesitas:<br>1. Completar el formulario de inscripción.<br>2. Presentar tu certificado de estudios secundarios.<br>3. Proporcionar documentos de identificación.<br>4. Presentar exámenes de admisión (si es necesario).<br>5. Pagar las tasas de inscripción.';
-        } else if (userInput.value.includes('2') || userInput.value.toLowerCase().includes('hablar con ventas')) {
-            botMessage.innerHTML = 'Te pondremos en contacto con nuestro equipo de ventas. Por favor, proporciona tu nombre y un número de teléfono o correo electrónico para que podamos comunicarnos contigo.';
-        } else if (userInput.value.includes('3') || userInput.value.toLowerCase().includes('ver carreras')) {
-            botMessage.innerHTML = 'Nuestra universidad ofrece una variedad de carreras en diferentes áreas. Algunas de nuestras facultades incluyen:<br>1. Ciencias de la Salud<br>2. Ingeniería y Tecnología<br>3. Ciencias Sociales y Humanidades<br>4. Negocios y Administración<br>¿Te gustaría saber más sobre alguna de estas áreas en particular?';
-        } else {
-            botMessage.innerHTML = 'Lo siento, no entiendo tu solicitud. Por favor, intenta elegir una de las opciones: "Información", "Hablar con ventas" o "Ver carreras".';
-        }
-        
-        chatBox.appendChild(botMessage);
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }, 1000);
-    
-    userInput.value = '';
-}
+
+    // Limpiar el campo de entrada de mensaje
+    document.getElementById('message-input').value = '';
+};
+
+document.getElementById('send-button').addEventListener('click', sendMessage);
+
+document.getElementById('message-input').addEventListener('keypress', (event) => {
+    if (event.key === 'Enter') {
+        sendMessage();
+    }
+});

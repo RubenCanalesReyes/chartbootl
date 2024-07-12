@@ -1,6 +1,5 @@
 const sequelize = require('../config/database');
 const { QueryTypes } = require('sequelize');
-
 const getUniversityInfo = async () => {
     try {
         const info = await sequelize.query('SELECT * FROM informacion_universidad LIMIT 1', {
@@ -12,7 +11,6 @@ const getUniversityInfo = async () => {
         throw error;
     }
 };
-
 const getSalesInfo = async () => {
     try {
         const info = await sequelize.query('SELECT * FROM informacion_ventas LIMIT 1', {
@@ -24,13 +22,10 @@ const getSalesInfo = async () => {
         throw error;
     }
 };
-
 const getCareersInfo = async () => {
     try {
         console.log('Ejecutando consulta SQL para obtener información de carreras');
-        //Como lo obtuve:
-        // // 
-        const info = await sequelize.query('SELECT * FROM `carreras`', {
+        const info = await sequelize.query('SELECT * FROM carreras', {
             type: QueryTypes.SELECT
         });
         console.log('Resultado de la consulta SQL:', info);
@@ -40,7 +35,6 @@ const getCareersInfo = async () => {
         throw error;
     }
 };
-
 module.exports = {
     getUniversityInfo,
     getSalesInfo,
