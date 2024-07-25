@@ -7,18 +7,6 @@ body {
     padding: 3rem;
 }
 
-@media (max-width: 991.98px) {
-    .padding {
-        padding: 1.5rem;
-    }
-}
-
-@media (max-width: 767.98px) {
-    .padding {
-        padding: 1rem;
-    }
-}
-
 .box {
     position: fixed;
     bottom: 20px;
@@ -29,7 +17,7 @@ body {
     background: #ffffff;
     border-top: 3px solid #d2d6de;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-    overflow: hidden; /* Asegura que el contenido no se desborde */
+    overflow: hidden;
 }
 
 .box-warning {
@@ -97,15 +85,13 @@ body {
     float: left;
     width: 60px;
     height: 60px;
-    overflow: hidden; /* Para asegurar que la imagen no se desborde */
-
+    overflow: hidden; 
 }
 
 .direct-chat-img img {
-    width: 100%; /* Ajusta el ancho máximo de la imagen */
-    height: auto; /* Ajusta automáticamente la altura */
+    width: 100%;
+    height: auto; 
 }
-
 
 .direct-chat-info {
     display: block;
@@ -232,6 +218,29 @@ body {
     margin-bottom: 10px;
 }
 
+.options-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.option-button {
+    background-color: #d2d6de;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-top: 5px;
+    flex: 1;
+}
+
+.option-button:hover {
+    background-color: #863638;
+    color: #fff;
+
+}
+
 #input-container {
     display: flex;
     align-items: center;
@@ -246,7 +255,6 @@ body {
     margin-right: 10px;
     font-size: 14px;
     font-family: 'Arial', sans-serif;
-    
 }
 
 #send-button {
@@ -264,34 +272,23 @@ body {
     background-color: #6b2a2a;
 }
 
-
-/* Scrollbar */
-/* Track (rastro) */
 ::-webkit-scrollbar {
     width: 8px;
-    /* Ancho del scrollbar */
 }
 
-/* Thumb (pulgares) */
 ::-webkit-scrollbar-thumb {
     background-color: #babac0;
-    /* Color del scrollbar */
     border-radius: 10px;
-    /* Radio de borde del scrollbar */
 }
 
-/* Handle (manija) en el scrollbar */
 ::-webkit-scrollbar-track {
     background: #f1f1f1;
-    /* Color del track */
 }
 
-/* Cambia la apariencia cuando se desplaza */
 ::-webkit-scrollbar-thumb:hover {
     background: #888;
 }
 
-/* Cambia la apariencia cuando está activo */
 ::-webkit-scrollbar-thumb:active {
     background: #555;
 }

@@ -5,6 +5,14 @@ const chatbotController = async (req, res) => {
 
     let response;
 
+    const optionsHTML = `
+        <div class="options-container">
+            <button class="option-button" data-message="Información">Información</button>
+            <button class="option-button" data-message="Hablar con ventas">Hablar con ventas</button>
+            <button class="option-button" data-message="Ver carreras">Ver carreras</button>
+        </div>
+    `;
+
     if (message === '1' || message.toLowerCase() === 'información') {
         const info = await getUniversityInfo();
         response = `
@@ -20,7 +28,9 @@ const chatbotController = async (req, res) => {
         `;
     } else if (message === '2' || message.toLowerCase() === 'hablar con ventas') {
         const info = await getSalesInfo();
-        response = `<strong>Número de teléfono de la universidad:</strong><a href="${info.telefono}" target="_blank"> ${info.telefono}</a>`;
+        response = `
+            <strong>Número de teléfono de la universidad:</strong> <a href="tel:${info.telefono}" target="_blank">${info.telefono}</a>
+        `;
     } else if (message === '3' || message.toLowerCase() === 'ver carreras') {
         const carreras = await getCareersInfo();
         response = '<strong>Carreras que ofrece la universidad:</strong><br>';
@@ -35,10 +45,8 @@ const chatbotController = async (req, res) => {
             `;
         });
     } else {
-        response = '<p>Lo siento, no entiendo tu solicitud. Por favor, intenta elegir una de las opciones: "1", "2" o "3"</p>';
+        response = '<p>Lo siento, no entiendo tu solicitud. Por favor, intenta elegir una de las opciones:</p>';
     }
-
-    // Configura la cabecera de la respuesta para enviar HTML
     res.setHeader('Content-Type', 'text/html');
     res.send(response);
 };
@@ -46,8 +54,3 @@ const chatbotController = async (req, res) => {
 module.exports = {
     chatbotController
 };
-
-
-
-
-
